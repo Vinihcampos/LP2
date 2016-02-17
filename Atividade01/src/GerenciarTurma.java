@@ -1,15 +1,14 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class GerenciarTurma {
 	
+	private static Scanner s;
+
 	public static void main(String[] args) {
 		Turma turma = new Turma();
 		Coordenador coordenador = new Coordenador();
 		ComponenteCurricular componenteCurricular = new ComponenteCurricular();
-		Scanner s = new Scanner(System.in);
+		s = new Scanner(System.in);
 		
 		System.out.println(">> Digite o codigo do componente curricular: ");
 		componenteCurricular.setCodigoComponente(s.nextLine());
@@ -19,12 +18,12 @@ public class GerenciarTurma {
 		
 		System.out.println(">> Digite o nome do coordernador: ");
 		coordenador.setNome(s.nextLine());
+				
+		System.out.println(">> Digite o setor do coordernador: ");
+		coordenador.setSetor(s.nextLine());
 		
 		System.out.println(">> Digite o siape do coordernador: ");
 		coordenador.setSiape(s.nextInt());
-		
-		System.out.println(">> Digite o setor do coordernador: ");
-		coordenador.setSetor(s.nextLine());
 		
 		turma.setComponenteCurricular(componenteCurricular);
 		turma.setCoordenador(coordenador);
@@ -38,19 +37,57 @@ public class GerenciarTurma {
 			System.out.println("3 - Adicionar um professor");
 			System.out.println("4 - Remover um professor");
 			System.out.println("5 - Imprimir informações");
+			System.out.println("0 - Sair");
 
 			opcoes = s.nextInt();
 			
-			switch(s.nextInt()){
+			switch(opcoes){
 				case 1:
-				break;
+					Aluno a = new Aluno();
+					s.nextLine();
+					System.out.println(">>Digite o nome do aluno: ");
+					a.setNome(s.nextLine());
+					System.out.println(">>Digite a matrícula do aluno: ");
+					a.setMatricula(s.nextInt());
+					
+					turma.getAlunos().add(a);					
+					break;
 				case 2:
-				break;
-				case 3:
-				break;
+					System.out.println(">>Digite a matrícula do aluno: ");
+					int matricula = s.nextInt();
+					
+					for(int i = 0; i < turma.getAlunos().size(); ++i){
+						if(turma.getAlunos().get(i).getMatricula() == matricula){
+							turma.getAlunos().remove(i);
+							System.out.println("Aluno removido com sucesso!");
+							break;
+						}
+					}
+					break;
+				case 3:					
+					Professor p = new Professor();
+					s.nextLine();
+					System.out.println(">>Digite o nome do professor: ");
+					p.setNome(s.nextLine());
+					System.out.println(">>Digite o siape do professor: ");
+					p.setSiape(s.nextInt());
+					
+					turma.getProfessores().add(p);					
+					break;
 				case 4:
-				break;
+					System.out.println(">>Digite o siape do professor: ");
+					int siape = s.nextInt();
+					
+					for(int i = 0; i < turma.getProfessores().size(); ++i){
+						if(turma.getProfessores().get(i).getSiape() == siape){
+							turma.getProfessores().remove(i);
+							System.out.println("Professor removido com sucesso!");
+							break;
+						}
+					}
+					break;
 				case 5:
+					System.out.println(turma.toString());
 				break;
 				case 0:
 					System.out.println("Programa encerrado!");
